@@ -4,6 +4,7 @@ function [ bool_mesh ] = PnPolyMesh( controlPoints, x_mesh, y_mesh )
 % This uses a horizontal raycast algorithm - should be reasonably fast.
 % Worth noting that we say points ON the line are INSIDE.
 
+% default false - need an odd number of crossings to be inside.
 bool_mesh = zeros(size(x_mesh));
 
 [nx, ~] = size(x_mesh);
@@ -13,12 +14,14 @@ bool_mesh = zeros(size(x_mesh));
 for i=1:nx
     for j=1:ny
         % iterate over all panels
-        
+        P = [x_mesh(i, j) y_mesh(i, j)];
+        A = controlPoints(N);
         for k=1:N
-            if ()
+            B = controlPoints(k);
+            if ((A(2) >= P(2)) ~= (B(2) >= P(2))) && 
                 bool_mesh(i, j) = ~bool_mesh(i, j);
             end
-            bool_mesh(i, j) = 
+            
         end
     end
 end
