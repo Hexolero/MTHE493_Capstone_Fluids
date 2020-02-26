@@ -14,14 +14,14 @@ bool_mesh = zeros(size(x_mesh));
 for i=1:nx
     for j=1:ny
         % iterate over all panels
-        P = [x_mesh(i, j) y_mesh(i, j)];
-        A = controlPoints(N);
+        P = [x_mesh(i, j), y_mesh(i, j)];
+        A = controlPoints(1, :);
         for k=1:N
-            B = controlPoints(k);
-            if ((A(2) >= P(2)) ~= (B(2) >= P(2))) && 
+            B = controlPoints(mod(k, N) + 1, :);
+            if ((A(2) > P(2)) ~= (B(2) > P(2))) && P(1) < (B(1) - A(1)) * (P(2) - A(2)) / (B(2) - A(2)) + A(1)
                 bool_mesh(i, j) = ~bool_mesh(i, j);
             end
-            
+            A = B;
         end
     end
 end

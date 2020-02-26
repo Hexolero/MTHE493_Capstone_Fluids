@@ -21,7 +21,13 @@ P = (R * P')';
 % Note that due to steps 1 and 2, we only need stretch on the x-axis
 P(1) = P(1) / norm(B - A);
 % Calculate translated point and velocity at this point
-unvel = [u(P(1), P(2)), v(P(1), P(2))];
+if P(2) == 0 % careful when transformed y is 0
+    % Default take the *upwards* normal as the direction
+    % NB this may be cause of weird behaviour later!!!
+    unvel = [u(P(1), P(2)), 1/2];
+else
+    unvel = [u(P(1), P(2)), v(P(1), P(2))];
+end
 
 % The only inverse transform we have to do on the velocity is rotation.
 R_inv = [cos(theta) sin(theta); -sin(theta) cos(theta)];

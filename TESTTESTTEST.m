@@ -35,7 +35,7 @@ clc
 
 %% TEST 3 - More complex body with freestream
 freestream = @(P) [1 0.5];
-controlPoints = [-0.5 0.05; -0.4 0.75; 0 0.5; 0.3 0.3; 0.5 0.05; 0.5 -0.05; 0.3 -0.3; 0 -0.5; -0.3 -0.3; -0.5 -0.05];
+controlPoints = [-0.5 0.05; -0.41 0.77; -0.399 0.8; 0 0.5; 0.3 0.3; 0.5 0.05; 0.5 -0.05; 0.3 -0.3; 0 -0.5; -0.3 -0.3; -0.5 -0.05];
 lambda = AIC_Solve(controlPoints, freestream);
 
 [N, ~] = size(controlPoints);
@@ -50,6 +50,19 @@ for i=1:N
    u = u + lambda(i) * nu;
    v = v + lambda(i) * nv;
 end
+
+b = PnPolyMesh(controlPoints, x, y);
+[nx, ~] = size(x);
+[ny, ~] = size(y);
+for i=1:nx
+    for j=1:ny
+        if b(i, j)
+            u(i, j) = 0;
+            v(i, j) = 0;
+        end
+    end
+end
+
 quiver(x, y, u, v);
 PlotControlPoints(controlPoints);
 hold on;
