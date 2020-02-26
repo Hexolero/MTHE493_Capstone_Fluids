@@ -48,5 +48,7 @@ end
 disp(A);
 disp(b);
 %% 3. Invert the AIC matrix and solve for lambda.
+tic;
 lambda = (inv(A) * b')';
+toc
 end
