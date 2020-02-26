@@ -5,7 +5,7 @@ clc
 %A = [-0.25 -0.25];
 %B = [0.25 0.25];
 %
-%range = -0.5:0.026:0.5;
+%range = -0.5:0.026:0.5;8
 %[x, y] = meshgrid(range, range);
 %[u, v] = UVSS_List(A, B, x, y);
 %
@@ -34,7 +34,7 @@ clc
 % streamline(x, y, u, v, zeros(size(-0.5:0.011:0.5)) - 0.75, -0.5:0.011:0.5);
 
 %% TEST 3 - More complex body with freestream
-freestream = @(P) [1 0];
+freestream = @(P) [1 1];
 controlPoints = [-0.5 0.05; -0.3 0.3; 0 0.5; 0.3 0.3; 0.5 0.05; 0.5 -0.05; 0.3 -0.3; 0 -0.5; -0.3 -0.3; -0.5 -0.05];
 lambda = AIC_Solve(controlPoints, freestream);
 
