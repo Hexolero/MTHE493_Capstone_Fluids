@@ -35,7 +35,7 @@ clc
 
 %% TEST 3 - More complex body with freestream
 freestream = @(P) [1 0.5];
-controlPoints = [-0.5 0.05; -0.41 0.77; -0.399 0.8; 0 0.5; 0.3 0.3; 0.5 0.05; 0.5 -0.05; 0.3 -0.3; 0 -0.5; -0.3 -0.3; -0.5 -0.05];
+controlPoints = [-0.5 0.05; -0.4 0.3; 0 0.5; 0.3 0.3; 0.5 0.05; 0.5 -0.05; 0.3 -0.3; 0 -0.5; -0.3 -0.3; -0.5 -0.05];
 lambda = AIC_Solve(controlPoints, freestream);
 
 [N, ~] = size(controlPoints);
@@ -65,5 +65,7 @@ end
 
 quiver(x, y, u, v);
 PlotControlPoints(controlPoints);
+com = [sum(controlPoints(:, 1)), sum(controlPoints(:, 2))] * 2 / numel(controlPoints);
 hold on;
+scatter(com(1), com(2));
 streamline(x, y, u, v, zeros(size(-0.5:0.1:0.5)) - 0.75, -0.5:0.1:0.5);
