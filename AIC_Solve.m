@@ -10,6 +10,8 @@ function [ lambda ] = AIC_Solve( controlPoints, flowFieldFnHandle )
 % then returned as the function output.
 % NB: controlPoints is passed as a 2-column matrix, each row w/ 1 point.
 
+disp('Starting AIC Solve...');
+
 % get number of panels.
 [N, ~] = size(controlPoints);
 
@@ -30,7 +32,8 @@ A = zeros(N, N);
 b = zeros(1, N);
 for i=1:N
     M = (controlPoints(mod(i, N) + 1, :) + controlPoints(i, :)) / 2;
-    b(i) = -dot(normals(i, :), flowFieldFnHandle(M));
+    [midnormalu, midnormalv] = flowFieldFnHandle(M);
+    b(i) = -dot(normals(i, :), [midnormalu, midnormalv]);
     for j=1:N
         CA = controlPoints(j, :);
         CB = controlPoints(mod(j, N) + 1, :);
@@ -45,10 +48,8 @@ for i=1:N
     end
 end
 
-disp(A);
-disp(b);
+%disp(A);
+%disp(b);
 %% 3. Invert the AIC matrix and solve for lambda.
-tic;
 lambda = (inv(A) * b')';
-toc
 end

@@ -18,8 +18,7 @@ theta = -atan((B(2) - A(2)) / (B(1) - A(1)));
 R = [cos(theta) -sin(theta); sin(theta) cos(theta)];
 P = (R * P')';
 % 3. stretch AB so that A falls on (-1/2, 0) and B falls on (1/2, 0)
-% Note that due to steps 1 and 2, we only need stretch on the x-axis
-P(1) = P(1) / norm(B - A);
+P = P / norm(B - A);
 % Calculate translated point and velocity at this point
 if P(2) == 0 % careful when transformed y is 0
     % Default take the *upwards* normal as the direction
@@ -34,5 +33,6 @@ R_inv = [cos(theta) sin(theta); -sin(theta) cos(theta)];
 unvel = (R_inv * unvel')';
 u = unvel(1);
 v = unvel(2);
+
 end
 
